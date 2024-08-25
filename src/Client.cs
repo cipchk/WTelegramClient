@@ -60,8 +60,10 @@ namespace WTelegram
 
 		private Func<string, string> _config;
 		private readonly Session _session;
+		public Session Session => _session;
 		private string _apiHash;
 		private Session.DCSession _dcSession;
+		public Session.DCSession DCSession => _dcSession;
 		private TcpClient _tcpClient;
 		private Stream _networkStream;
 		private IObject _lastSentMsg;
