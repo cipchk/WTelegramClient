@@ -60,8 +60,10 @@ namespace WTelegram
 
 		private Func<string, string> _config;
 		private readonly Session _session;
+		public Session Session => _session;
 		private string _apiHash;
 		private Session.DCSession _dcSession;
+		public Session.DCSession DCSession => _dcSession;
 		private TcpClient _tcpClient;
 		private Stream _networkStream;
 		private IObject _lastSentMsg;
@@ -97,18 +99,13 @@ namespace WTelegram
 			})
 		{ }
 
-		public Client(Func<string, string> configProvider, byte[] startSession, Action<byte[]> saveSession)
-			: this(configProvider, new ActionStore(startSession, saveSession)) { }
-
 		/// <summary>Welcome to WTelegramClient! 🙂</summary>
 		/// <param name="configProvider">Config callback, is queried for: <b>api_id</b>, <b>api_hash</b>, <b>session_pathname</b></param>
-		/// <param name="sessionStore">if specified, must support initial Length &amp; Read() of a session, then calls to Write() the updated session. Other calls can be ignored</param>
-		public Client(Func<string, string> configProvider = null, Stream sessionStore = null)
+		public Client(Func<string, string> configProvider = null, string json = null)
 		{
 			_config = configProvider ?? DefaultConfigOrAsk;
-			var session_key = _config("session_key") ?? (_apiHash = Config("api_hash"));
-			sessionStore ??= new SessionStore(Config("session_pathname"));
-			_session = Session.LoadOrCreate(sessionStore, Convert.FromHexString(session_key));
+			_apiHash = Config("api_hash");
+			_session = Session.LoadOrCreate(json);
 			if (_session.ApiId == 0) _session.ApiId = int.Parse(Config("api_id"));
 			if (_session.MainDC != 0) _session.DCSessions.TryGetValue(_session.MainDC, out _dcSession);
 			_dcSession ??= new() { Id = Helpers.RandomLong() };

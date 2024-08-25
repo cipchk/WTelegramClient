@@ -24,7 +24,7 @@ namespace WTelegram
 		public static Action<int, string> Log { get; set; } = DefaultLogger;
 
 		/// <summary>For serializing indented Json with fields included</summary>
-		public static readonly JsonSerializerOptions JsonOptions = new() { IncludeFields = true, WriteIndented = true,
+		public static readonly JsonSerializerOptions JsonOptions = new() { IncludeFields = true, WriteIndented = false,
 #if NET8_0_OR_GREATER
 			TypeInfoResolver = JsonSerializer.IsReflectionEnabledByDefault ? null : WTelegramContext.Default,
 #endif
