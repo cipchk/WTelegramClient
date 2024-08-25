@@ -11,7 +11,7 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <PackageId>JSONTelegramClient</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Wizou</Authors>
     <Description>Telegram Client API (MTProto) library written 100% in C# and .NET Standard | Latest API layer: 186
 
